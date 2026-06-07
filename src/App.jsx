@@ -50,7 +50,7 @@ const SKILLS = [
   "Application"
 ];
 
-function HeroSection() {
+function HeroSection({ onContactClick }) {
   const { scrollY } = useScroll()
   const y1 = useTransform(scrollY, [0, 1000], [0, 150])
   const y2 = useTransform(scrollY, [0, 1000], [0, -150])
@@ -126,7 +126,7 @@ function HeroSection() {
               <div className="absolute inset-[2px] bg-zinc-900 group-hover:bg-zinc-800 transition-colors rounded-full z-[-1]"></div>
               Khám Phá Dự Án <ArrowRight weight="bold" />
             </a>
-            <a href="#contact" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 text-zinc-900 rounded-full font-medium hover:text-brand-700 transition-all duration-300 z-10 group shadow-sm border border-zinc-200">
+            <a href="#contact" onClick={() => onContactClick?.()} className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 text-zinc-900 rounded-full font-medium hover:text-brand-700 transition-all duration-300 z-10 group shadow-sm border border-zinc-200">
               <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_60%,#14b8a6,#3b82f6,#8b5cf6)] animate-[spin_3s_linear_infinite] z-[-2] opacity-100"></div>
               <div className="absolute inset-[1px] bg-white/70 backdrop-blur-xl group-hover:bg-white transition-colors rounded-full z-[-1]"></div>
               Liên Hệ Ngay
@@ -413,7 +413,13 @@ function Footer() {
                 <h4 className="font-semibold text-zinc-900 mb-6 text-xl">Mạng xã hội</h4>
                 <ul className="space-y-4 text-zinc-500 font-light text-lg">
                   <li>
-                    <a href="https://m.me/0984130234" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><FacebookLogo /> Messenger</a>
+                    <a href="https://m.me/0984130234" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><FacebookLogo /> Facebook</a>
+                  </li>
+                  <li>
+                    <a href="https://tiktok.com/@la_manhdey" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><TiktokLogo /> TikTok</a>
+                  </li>
+                  <li>
+                    <a href="https://www.youtube.com/@manhdev94" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><YoutubeLogo /> YouTube</a>
                   </li>
                   <li>
                     <a href="#" className="hover:text-brand-600 transition-colors flex items-center gap-3"><LinkedinLogo /> LinkedIn</a>
@@ -427,10 +433,38 @@ function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-zinc-100">
-          <p className="text-zinc-400 font-light">© 2026 Trần Văn Mạnh. All rights reserved.</p>
-          <div className="text-zinc-400 font-mono text-sm mt-4 md:mt-0">
-            Trần Văn Mạnh | FullStack Deverloper
+        <div className="flex flex-col items-center justify-center pt-16 pb-8 border-t border-zinc-100">
+          <div className="relative group cursor-default mb-6">
+            {/* Vòng oval phát sáng */}
+            <div className="absolute inset-0 border-[1.5px] border-brand-500/20 rounded-[100%] blur-[2px] scale-110 group-hover:border-brand-400/60 group-hover:blur-[4px] group-hover:scale-115 transition-all duration-700"></div>
+            <div className="absolute inset-0 border-[0.5px] border-brand-300/40 rounded-[100%] scale-105 group-hover:scale-110 transition-transform duration-700"></div>
+            
+            <div className="flex flex-col items-center justify-center px-16 py-8 bg-gradient-to-b from-white/80 to-white/30 backdrop-blur-md rounded-[100%] border border-white/60 shadow-[0_4px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_40px_rgba(20,184,166,0.1)] transition-all duration-700 relative overflow-hidden">
+               <div className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,transparent_70%,#14b8a6_100%)] opacity-0 group-hover:opacity-15 animate-[spin_4s_linear_infinite] rounded-[100%] transition-opacity duration-700"></div>
+               
+               <div className="flex items-center gap-3 mb-2 relative z-10">
+                 <span className="text-3xl text-zinc-300 font-light group-hover:text-brand-300 transition-colors duration-500">©</span>
+                 <span className="text-5xl font-signature tracking-wider text-zinc-800 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:to-blue-600 transition-all duration-500 drop-shadow-sm group-hover:drop-shadow-md">Mạnh Trần</span>
+               </div>
+               
+               <div className="flex items-center gap-4 w-full mb-3 relative z-10">
+                 <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-zinc-300 group-hover:to-brand-300 transition-colors duration-500"></div>
+                 <span className="text-lg font-mono font-semibold tracking-[0.25em] text-zinc-500 group-hover:text-brand-500 transition-colors duration-500">2026</span>
+                 <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-zinc-300 group-hover:to-brand-300 transition-colors duration-500"></div>
+               </div>
+               
+               <div className="text-[0.65rem] font-bold tracking-[0.35em] text-zinc-400 group-hover:text-zinc-500 uppercase mb-4 relative z-10 transition-colors duration-500">
+                 All Rights Reserved
+               </div>
+               
+               <div className="text-sm font-bold tracking-[0.15em] text-zinc-600 group-hover:text-brand-600 bg-zinc-50/80 group-hover:bg-brand-50/80 px-5 py-1.5 rounded-full border border-zinc-200 group-hover:border-brand-200/60 shadow-sm transition-all duration-500 relative z-10">
+                 0984.130.234
+               </div>
+            </div>
+          </div>
+          
+          <div className="text-zinc-400 font-mono text-sm mt-4">
+            Trần Văn Mạnh | FullStack Developer
           </div>
         </div>
       </div>
@@ -438,10 +472,24 @@ function Footer() {
   )
 }
 
-function FloatingContact() {
-  const [isOpen, setIsOpen] = useState(false)
-
+function FloatingContact({ isOpen, setIsOpen }) {
   const toggleOpen = () => setIsOpen(!isOpen)
+  const contactRef = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (contactRef.current && !contactRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+    
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen, setIsOpen])
 
   const contacts = [
     { name: "Zalo", icon: <ChatCircle weight="fill" />, color: "bg-gradient-to-r from-blue-400 to-[#0068FF]", shadow: "shadow-blue-500/40", url: "https://zalo.me/0984130234" },
@@ -476,7 +524,7 @@ function FloatingContact() {
   }
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-5">
+    <div ref={contactRef} className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-5">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -545,16 +593,18 @@ function FloatingContact() {
 }
 
 function App() {
+  const [isContactOpen, setIsContactOpen] = useState(false)
+
   return (
     <>
       <AnimatedBackground />
       <main className="font-sans selection:bg-brand-200 selection:text-brand-900 overflow-visible">
-        <HeroSection />
+        <HeroSection onContactClick={() => setIsContactOpen(true)} />
         <BentoGrid />
         <FeaturedWork />
         <Footer />
       </main>
-      <FloatingContact />
+      <FloatingContact isOpen={isContactOpen} setIsOpen={setIsContactOpen} />
     </>
   )
 }

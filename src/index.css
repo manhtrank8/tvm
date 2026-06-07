@@ -14,6 +14,7 @@
   
   --font-sans: 'Geist', 'Inter', system-ui, sans-serif;
   --font-mono: 'Geist Mono', monospace;
+  --font-signature: 'Great Vibes', cursive;
 }
 
 @layer base {
