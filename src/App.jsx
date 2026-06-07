@@ -43,12 +43,11 @@ function AnimatedBackground() {
 }
 
 const SKILLS = [
-  "Tự động hóa PLC",
-  "Phát triển Website",
-  "Ứng dụng Mobile",
-  "Machine Vision",
-  "Phần mềm CMMS",
-  "Hệ thống EPMS"
+  "PLC",
+  "Website",
+  "IOT",
+  "Vision",
+  "Application"
 ];
 
 function HeroSection() {
@@ -98,7 +97,7 @@ function HeroSection() {
                   initial={{ y: 40, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -40, opacity: 0 }}
-                  transition={{ duration: 0.5, ease: "circOut" }}
+                  transition={{ duration: 0.2, ease: "circOut" }}
                   className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-600 drop-shadow-sm"
                 >
                   {SKILLS[skillIndex]}
@@ -122,10 +121,14 @@ function HeroSection() {
             transition={{ delay: 0.3 }}
             className="flex flex-wrap gap-4"
           >
-            <a href="#work" className="inline-flex items-center gap-3 px-8 py-4 bg-zinc-900 text-white rounded-full font-medium shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:-translate-y-1 transition-all duration-300">
+            <a href="#work" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 text-white rounded-full font-medium shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:-translate-y-1 transition-all duration-300 z-10 group">
+              <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_60%,#ec4899,#8b5cf6,#3b82f6)] animate-[spin_3s_linear_infinite] z-[-2]"></div>
+              <div className="absolute inset-[2px] bg-zinc-900 group-hover:bg-zinc-800 transition-colors rounded-full z-[-1]"></div>
               Khám Phá Dự Án <ArrowRight weight="bold" />
             </a>
-            <a href="#contact" className="inline-flex items-center gap-3 px-8 py-4 glass-panel text-zinc-900 rounded-full font-medium hover:bg-white transition-all duration-300 border-zinc-200">
+            <a href="#contact" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 text-zinc-900 rounded-full font-medium hover:text-brand-700 transition-all duration-300 z-10 group shadow-sm border border-zinc-200">
+              <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_60%,#14b8a6,#3b82f6,#8b5cf6)] animate-[spin_3s_linear_infinite] z-[-2] opacity-100"></div>
+              <div className="absolute inset-[1px] bg-white/70 backdrop-blur-xl group-hover:bg-white transition-colors rounded-full z-[-1]"></div>
               Liên Hệ Ngay
             </a>
           </motion.div>
@@ -183,9 +186,11 @@ function BentoGrid() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ type: "spring", stiffness: 80, damping: 20 }}
-            className="md:col-span-2 glass-card p-10 rounded-[2rem] flex flex-col justify-between group overflow-hidden relative"
+            className="md:col-span-2 p-10 rounded-[2rem] flex flex-col justify-between group overflow-hidden relative z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500"
           >
-            <div className="absolute -right-4 -bottom-4 opacity-[0.03] text-zinc-900 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6">
+            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#14b8a6,#3b82f6)] animate-[spin_5s_linear_infinite] z-[-2] opacity-100"></div>
+            <div className="absolute inset-[1.5px] bg-white/80 backdrop-blur-xl rounded-[calc(2rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:bg-white/95"></div>
+            <div className="absolute -right-4 -bottom-4 opacity-[0.03] text-zinc-900 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6 z-0">
               <Factory size={280} weight="fill" />
             </div>
             <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-zinc-800 mb-6 shadow-sm border border-zinc-100 group-hover:-translate-y-2 transition-transform duration-500">
@@ -203,9 +208,11 @@ function BentoGrid() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.1 }}
-            className="glass-card p-10 rounded-[2rem] flex flex-col justify-between group"
+            className="p-10 rounded-[2rem] flex flex-col justify-between group overflow-hidden relative z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500"
           >
-            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-blue-600 mb-6 shadow-sm border border-zinc-100 group-hover:-translate-y-2 transition-transform duration-500">
+            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#3b82f6,#8b5cf6)] animate-[spin_5s_linear_infinite] z-[-2] opacity-100"></div>
+            <div className="absolute inset-[1.5px] bg-white/80 backdrop-blur-xl rounded-[calc(2rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:bg-white/95"></div>
+            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-blue-600 mb-6 shadow-sm border border-zinc-100 group-hover:-translate-y-2 transition-transform duration-500 relative z-10">
               <Eye size={32} weight="duotone" />
             </div>
             <div>
@@ -220,9 +227,11 @@ function BentoGrid() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.2 }}
-            className="glass-card p-10 rounded-[2rem] flex flex-col justify-between group"
+            className="p-10 rounded-[2rem] flex flex-col justify-between group overflow-hidden relative z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500"
           >
-            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-600 mb-6 shadow-sm border border-zinc-100 group-hover:-translate-y-2 transition-transform duration-500">
+            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#ec4899,#facc15)] animate-[spin_5s_linear_infinite] z-[-2] opacity-100"></div>
+            <div className="absolute inset-[1.5px] bg-white/80 backdrop-blur-xl rounded-[calc(2rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:bg-white/95"></div>
+            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-600 mb-6 shadow-sm border border-zinc-100 group-hover:-translate-y-2 transition-transform duration-500 relative z-10">
               <DeviceMobile size={32} weight="duotone" />
             </div>
             <div>
@@ -237,9 +246,11 @@ function BentoGrid() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.3 }}
-            className="md:col-span-4 glass-card p-10 rounded-[2rem] flex flex-col md:flex-row items-start md:items-center justify-between group overflow-hidden relative bg-gradient-to-r from-white to-zinc-50/50"
+            className="md:col-span-4 p-10 rounded-[2rem] flex flex-col md:flex-row items-start md:items-center justify-between group overflow-hidden relative z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500"
           >
-            <div className="absolute right-0 top-0 bottom-0 w-2/3 bg-[url('/dashboard.png')] bg-cover bg-left opacity-[0.08] mix-blend-multiply group-hover:scale-105 transition-transform duration-1000"></div>
+            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#14b8a6,#8b5cf6,#ec4899)] animate-[spin_5s_linear_infinite] z-[-2] opacity-100"></div>
+            <div className="absolute inset-[1.5px] bg-gradient-to-r from-white/95 to-zinc-50/90 backdrop-blur-xl rounded-[calc(2rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:from-white group-hover:to-zinc-50/95"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-2/3 bg-[url('/dashboard.png')] bg-cover bg-left opacity-[0.08] mix-blend-multiply group-hover:scale-105 transition-transform duration-1000 z-0"></div>
 
             <div className="relative z-10 md:w-1/2 mb-8 md:mb-0">
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-zinc-800 mb-6 border border-zinc-100 shadow-sm group-hover:-translate-y-2 transition-transform duration-500">
@@ -286,7 +297,9 @@ function ProjectCard({ project, index }) {
       style={{ y, opacity }}
       className="mb-32 last:mb-0"
     >
-      <div className="bg-white/80 backdrop-blur-xl border border-white p-6 md:p-10 rounded-[2.5rem] flex flex-col lg:flex-row items-center gap-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-shadow duration-500">
+      <div className="relative p-6 md:p-10 rounded-[2.5rem] flex flex-col lg:flex-row items-center gap-12 group/card overflow-hidden z-10 shadow-[0_20px_50px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-500">
+        <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#3b82f6,#14b8a6,#8b5cf6)] animate-[spin_6s_linear_infinite] z-[-2] opacity-100"></div>
+        <div className="absolute inset-[1.5px] bg-white/90 backdrop-blur-xl border border-white/50 rounded-[calc(2.5rem-1.5px)] z-[-1] transition-colors duration-500 group-hover/card:bg-white/95"></div>
         <div className="w-full lg:w-[55%] aspect-[16/10] rounded-[2rem] overflow-hidden relative bg-zinc-100 group">
           <img
             src={project.img}
@@ -301,7 +314,9 @@ function ProjectCard({ project, index }) {
           </div>
           <h3 className="text-3xl md:text-4xl font-bold text-zinc-900 mb-6 leading-tight tracking-tight">{project.name}</h3>
           <p className="text-zinc-500 text-lg mb-10 leading-relaxed font-light">{project.desc}</p>
-          <button className="inline-flex items-center gap-3 w-max px-8 py-4 bg-zinc-900 text-white rounded-full font-medium hover:shadow-lg hover:-translate-y-1 transition-all group-btn">
+          <button className="relative overflow-hidden inline-flex items-center gap-3 w-max px-8 py-4 text-white rounded-full font-medium transition-all z-10 group hover:-translate-y-1 hover:shadow-lg">
+            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_60%,#8b5cf6,#ec4899)] animate-[spin_3s_linear_infinite] z-[-2] opacity-100"></div>
+            <div className="absolute inset-[2px] bg-zinc-900 group-hover:bg-zinc-800 transition-colors rounded-full z-[-1]"></div>
             Xem chi tiết <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -370,38 +385,44 @@ function Footer() {
           <div>
             <h2 className="text-6xl md:text-[5rem] font-bold text-zinc-900 mb-8 tracking-tighter leading-[1.1]">Let's build<br />something.</h2>
             <p className="text-2xl text-zinc-500 font-light mb-12 max-w-lg">Liên hệ ngay để thảo luận về giải pháp tối ưu cho doanh nghiệp của bạn.</p>
-            <a href="mailto:manhquyhop2@gmail.com" className="inline-flex items-center gap-4 px-10 py-5 bg-brand-600 text-white rounded-full font-medium text-lg hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(20,184,166,0.3)] transition-all">
+            <a href="mailto:manhquyhop2@gmail.com" className="relative overflow-hidden inline-flex items-center gap-4 px-10 py-5 text-white rounded-full font-medium text-lg hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(20,184,166,0.3)] transition-all z-10 group">
+              <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_60%,#14b8a6,#2dd4bf)] animate-[spin_3s_linear_infinite] z-[-2]"></div>
+              <div className="absolute inset-[2px] bg-brand-600 group-hover:bg-brand-500 transition-colors rounded-full z-[-1]"></div>
               Gửi Email <ArrowRight weight="bold" />
             </a>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 glass-card p-12 rounded-[3rem]">
-            <div>
-              <h4 className="font-semibold text-zinc-900 mb-6 text-xl">Liên Hệ Trực Tiếp</h4>
-              <ul className="space-y-4 text-zinc-500 font-light text-lg">
-                <li>
-                  <a href="tel:0984130234" className="hover:text-brand-600 transition-colors flex items-center gap-3"><Phone /> 0984 130 234</a>
-                </li>
-                <li>
-                  <a href="https://zalo.me/0984130234" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><ChatCircle /> Zalo</a>
-                </li>
-                <li>
-                  <a href="mailto:manhquyhop2@gmail.com" className="hover:text-brand-600 transition-colors flex items-center gap-3"><EnvelopeSimple /> Email</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-zinc-900 mb-6 text-xl">Mạng xã hội</h4>
-              <ul className="space-y-4 text-zinc-500 font-light text-lg">
-                <li>
-                  <a href="https://m.me/0984130234" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><FacebookLogo /> Messenger</a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-brand-600 transition-colors flex items-center gap-3"><LinkedinLogo /> LinkedIn</a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-brand-600 transition-colors flex items-center gap-3"><GithubLogo /> GitHub</a>
-                </li>
-              </ul>
+          <div className="relative p-12 rounded-[3rem] overflow-hidden z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500 group">
+            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#ec4899,#3b82f6)] animate-[spin_6s_linear_infinite] z-[-2] opacity-100"></div>
+            <div className="absolute inset-[1.5px] bg-white/80 backdrop-blur-xl border border-white/50 rounded-[calc(3rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:bg-white/95"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
+              <div>
+                <h4 className="font-semibold text-zinc-900 mb-6 text-xl">Liên Hệ Trực Tiếp</h4>
+                <ul className="space-y-4 text-zinc-500 font-light text-lg">
+                  <li>
+                    <a href="tel:0984130234" className="hover:text-brand-600 transition-colors flex items-center gap-3"><Phone /> 0984 130 234</a>
+                  </li>
+                  <li>
+                    <a href="https://zalo.me/0984130234" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><ChatCircle /> Zalo</a>
+                  </li>
+                  <li>
+                    <a href="mailto:manhquyhop2@gmail.com" className="hover:text-brand-600 transition-colors flex items-center gap-3"><EnvelopeSimple /> Email</a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-zinc-900 mb-6 text-xl">Mạng xã hội</h4>
+                <ul className="space-y-4 text-zinc-500 font-light text-lg">
+                  <li>
+                    <a href="https://m.me/0984130234" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><FacebookLogo /> Messenger</a>
+                  </li>
+                  <li>
+                    <a href="#" className="hover:text-brand-600 transition-colors flex items-center gap-3"><LinkedinLogo /> LinkedIn</a>
+                  </li>
+                  <li>
+                    <a href="#" className="hover:text-brand-600 transition-colors flex items-center gap-3"><GithubLogo /> GitHub</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

@@ -36,6 +36,10 @@ if errorlevel 1 (
 )
 
 echo.
+echo [*] Dang dong bo code tu GitHub ve may (neu co)...
+git pull --rebase origin main
+
+echo.
 echo [*] Dang day code len GitHub...
 git push -u origin main
 
