@@ -1,13 +1,13 @@
 import { motion, useScroll, useTransform, AnimatePresence, useSpring } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
-import { 
-  ArrowRight, 
-  Code, 
-  Robot, 
-  DeviceMobile, 
-  Storefront, 
-  GithubLogo, 
-  LinkedinLogo, 
+import {
+  ArrowRight,
+  Code,
+  Robot,
+  DeviceMobile,
+  Storefront,
+  GithubLogo,
+  LinkedinLogo,
   EnvelopeSimple,
   Lightning,
   Factory,
@@ -16,7 +16,11 @@ import {
   CheckCircle,
   FacebookLogo,
   ChatCircle,
-  Phone
+  Phone,
+  TiktokLogo,
+  YoutubeLogo,
+  X,
+  ChatTeardropDots
 } from '@phosphor-icons/react'
 
 function AnimatedBackground() {
@@ -24,10 +28,10 @@ function AnimatedBackground() {
   // Move the background vertically as user scrolls to create a parallax effect
   const yBg = useTransform(scrollY, [0, 2000], [0, 400])
   const rotate = useTransform(scrollY, [0, 2000], [0, 45])
-  
+
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#f4f4f6]">
-      <motion.div 
+      <motion.div
         style={{ y: yBg, rotate }}
         className="absolute -top-[20%] -left-[10%] w-[150%] h-[150%] bg-grid-pattern opacity-40 origin-center"
       ></motion.div>
@@ -65,14 +69,14 @@ function HeroSection() {
   return (
     <section className="relative min-h-[100dvh] flex items-center pt-24 pb-16">
       <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
           style={{ y: y1, opacity }}
           className="flex flex-col items-start"
         >
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass-panel mb-8 border border-white"
@@ -80,8 +84,8 @@ function HeroSection() {
             <span className="w-2.5 h-2.5 rounded-full bg-brand-500 shadow-[0_0_12px_rgba(20,184,166,0.6)]"></span>
             <span className="text-sm font-semibold tracking-wide text-zinc-700 uppercase">Sẵn sàng nhận dự án</span>
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl md:text-7xl font-bold tracking-tighter text-zinc-900 mb-6 leading-[1.1]"
@@ -102,8 +106,8 @@ function HeroSection() {
               </AnimatePresence>
             </div>
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -111,8 +115,8 @@ function HeroSection() {
           >
             Nơi tư duy công nghiệp và logic máy móc hòa quyện cùng giao diện phần mềm trực quan.
           </motion.p>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -126,8 +130,8 @@ function HeroSection() {
             </a>
           </motion.div>
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           initial={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -135,12 +139,12 @@ function HeroSection() {
           className="relative lg:h-[700px] flex items-center justify-center w-full"
         >
           <div className="absolute inset-0 bg-gradient-to-tr from-brand-100/40 to-blue-100/40 rounded-full blur-[120px] -z-10"></div>
-          <motion.img 
+          <motion.img
             animate={{ y: [-15, 15, -15] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            src="/hero.png" 
-            alt="Premium Automation Concept" 
-            className="w-full max-w-[120%] lg:max-w-[140%] object-contain drop-shadow-2xl mix-blend-multiply" 
+            src="/hero.png"
+            alt="Premium Automation Concept"
+            className="w-full max-w-[120%] lg:max-w-[140%] object-contain drop-shadow-2xl mix-blend-multiply"
           />
         </motion.div>
       </div>
@@ -153,7 +157,7 @@ function BentoGrid() {
     <section id="expertise" className="py-32 px-6 relative z-10">
       <div className="container mx-auto">
         <div className="mb-24 text-center max-w-3xl mx-auto">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -161,7 +165,7 @@ function BentoGrid() {
           >
             Hệ Sinh Thái Kỹ Năng
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -171,10 +175,10 @@ function BentoGrid() {
             Nền tảng vững chắc từ phần cứng công nghiệp đến hệ thống phần mềm đám mây.
           </motion.p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[300px]">
           {/* Automation */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 40 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -192,9 +196,9 @@ function BentoGrid() {
               <p className="text-zinc-500 text-lg">Thiết kế, lập trình và tích hợp cánh tay robot công nghiệp, hệ thống phân loại và băng chuyền tốc độ cao.</p>
             </div>
           </motion.div>
-          
+
           {/* Machine Vision */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 40 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -209,9 +213,9 @@ function BentoGrid() {
               <p className="text-zinc-500 text-lg">Xử lý ảnh công nghiệp, đọc OCR và phát hiện lỗi vật lý.</p>
             </div>
           </motion.div>
-          
+
           {/* Software / Web Mobile */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 40 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -228,7 +232,7 @@ function BentoGrid() {
           </motion.div>
 
           {/* CMMS / EPMS */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 40 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -236,7 +240,7 @@ function BentoGrid() {
             className="md:col-span-4 glass-card p-10 rounded-[2rem] flex flex-col md:flex-row items-start md:items-center justify-between group overflow-hidden relative bg-gradient-to-r from-white to-zinc-50/50"
           >
             <div className="absolute right-0 top-0 bottom-0 w-2/3 bg-[url('/dashboard.png')] bg-cover bg-left opacity-[0.08] mix-blend-multiply group-hover:scale-105 transition-transform duration-1000"></div>
-            
+
             <div className="relative z-10 md:w-1/2 mb-8 md:mb-0">
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-zinc-800 mb-6 border border-zinc-100 shadow-sm group-hover:-translate-y-2 transition-transform duration-500">
                 <Lightning size={32} weight="duotone" />
@@ -262,35 +266,35 @@ function BentoGrid() {
 
 function ProjectCard({ project, index }) {
   const ref = useRef(null)
-  
+
   // Track scroll position of this specific card
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["0 1", "0.6 1"] // Animation plays while the top of the card moves from the bottom of the viewport to 60% up the viewport
   })
-  
+
   // Smooth out the scroll raw value with a spring to prevent any stutter
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
-  
+
   // Map progress (0 to 1) to y translation and opacity
   const y = useTransform(smoothProgress, [0, 1], [150, 0])
   const opacity = useTransform(smoothProgress, [0, 1], [0, 1])
 
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       style={{ y, opacity }}
       className="mb-32 last:mb-0"
     >
       <div className="bg-white/80 backdrop-blur-xl border border-white p-6 md:p-10 rounded-[2.5rem] flex flex-col lg:flex-row items-center gap-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-shadow duration-500">
         <div className="w-full lg:w-[55%] aspect-[16/10] rounded-[2rem] overflow-hidden relative bg-zinc-100 group">
-          <img 
-            src={project.img} 
-            alt={project.name} 
-            className="absolute inset-0 w-full h-full object-cover rounded-xl scale-[1.02] group-hover:scale-105 transition-transform duration-700 ease-out" 
+          <img
+            src={project.img}
+            alt={project.name}
+            className="absolute inset-0 w-full h-full object-cover rounded-xl scale-[1.02] group-hover:scale-105 transition-transform duration-700 ease-out"
           />
         </div>
-        
+
         <div className="w-full lg:w-[45%] flex flex-col py-4">
           <div className="inline-block px-4 py-1.5 rounded-full bg-zinc-100 text-xs font-semibold tracking-wider text-zinc-600 uppercase mb-6 self-start border border-zinc-200">
             {project.type}
@@ -308,33 +312,33 @@ function ProjectCard({ project, index }) {
 
 function FeaturedWork() {
   const projects = [
-    { 
-      name: "Tích hợp Robot Delta & Đóng thùng", 
-      type: "Tự Động Hóa · Robotics", 
+    {
+      name: "Tích hợp Robot Delta & Đóng thùng",
+      type: "Tự Động Hóa · Robotics",
       desc: "Nâng cao năng suất với hệ thống gắp thả tự động bằng Robot Delta tốc độ cao, tích hợp máy gắp thùng (Case Packer) tự động khép kín.",
       img: "/robot.png"
     },
-    { 
-      name: "Machine Vision: Đọc Date & Phát Hiện Lỗi", 
-      type: "AI & Machine Vision", 
+    {
+      name: "Machine Vision: Đọc Date & Phát Hiện Lỗi",
+      type: "AI & Machine Vision",
       desc: "Hệ thống thị giác máy tính công nghiệp (Cognex/Keyence) nhận diện, đọc OCR mã vạch/date, tự động loại bỏ sản phẩm lỗi không đạt chuẩn.",
       img: "/vision.png"
     },
-    { 
-      name: "Hệ thống CMMS & Quản lý Bảo Trì", 
-      type: "Phần mềm doanh nghiệp", 
+    {
+      name: "Hệ thống CMMS & Quản lý Bảo Trì",
+      type: "Phần mềm doanh nghiệp",
       desc: "Nền tảng số hóa quy trình quản lý tài sản, bảo trì thiết bị và theo dõi đánh giá KPI nhân sự. Tích hợp biểu đồ trực quan.",
       img: "/dashboard.png"
     },
-    { 
-      name: "Hệ thống Quản lý Điện năng (EPMS)", 
-      type: "Giám sát năng lượng", 
+    {
+      name: "Hệ thống Quản lý Điện năng (EPMS)",
+      type: "Giám sát năng lượng",
       desc: "Giải pháp IoT giám sát điện năng tiêu thụ toàn nhà máy theo thời gian thực, lập báo cáo phân tích để tối ưu hóa chi phí vận hành.",
       img: "/epms.png"
     },
-    { 
-      name: "Hệ thống Phân loại Sản phẩm Văn Minh", 
-      type: "Tự động hóa toàn diện", 
+    {
+      name: "Hệ thống Phân loại Sản phẩm Văn Minh",
+      type: "Tự động hóa toàn diện",
       desc: "Giải pháp phân loại bưu kiện tự động sử dụng băng tải động cơ, tích hợp cân động và phần mềm quản lý kho.",
       img: "/sorting.png"
     }
@@ -347,7 +351,7 @@ function FeaturedWork() {
           <h2 className="text-4xl md:text-[4rem] font-bold text-zinc-900 tracking-tight mb-6">Dự Án Tiêu Biểu</h2>
           <p className="text-zinc-500 text-xl font-light max-w-2xl mx-auto">Những giải pháp thực tế đã triển khai mang lại giá trị vận hành bền vững.</p>
         </div>
-        
+
         <div className="relative">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} index={index} />
@@ -364,7 +368,7 @@ function Footer() {
       <div className="container mx-auto max-w-[1400px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-32 items-center">
           <div>
-            <h2 className="text-6xl md:text-[5rem] font-bold text-zinc-900 mb-8 tracking-tighter leading-[1.1]">Let's build<br/>something.</h2>
+            <h2 className="text-6xl md:text-[5rem] font-bold text-zinc-900 mb-8 tracking-tighter leading-[1.1]">Let's build<br />something.</h2>
             <p className="text-2xl text-zinc-500 font-light mb-12 max-w-lg">Liên hệ ngay để thảo luận về giải pháp tối ưu cho doanh nghiệp của bạn.</p>
             <a href="mailto:manhquyhop2@gmail.com" className="inline-flex items-center gap-4 px-10 py-5 bg-brand-600 text-white rounded-full font-medium text-lg hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(20,184,166,0.3)] transition-all">
               Gửi Email <ArrowRight weight="bold" />
@@ -401,7 +405,7 @@ function Footer() {
             </div>
           </div>
         </div>
-        
+
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-zinc-100">
           <p className="text-zinc-400 font-light">© 2026 Trần Văn Mạnh. All rights reserved.</p>
           <div className="text-zinc-400 font-mono text-sm mt-4 md:mt-0">
@@ -410,6 +414,112 @@ function Footer() {
         </div>
       </div>
     </footer>
+  )
+}
+
+function FloatingContact() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggleOpen = () => setIsOpen(!isOpen)
+
+  const contacts = [
+    { name: "Zalo", icon: <ChatCircle weight="fill" />, color: "bg-gradient-to-r from-blue-400 to-[#0068FF]", shadow: "shadow-blue-500/40", url: "https://zalo.me/0984130234" },
+    { name: "Facebook", icon: <FacebookLogo weight="fill" />, color: "bg-gradient-to-r from-blue-600 to-[#0866FF]", shadow: "shadow-blue-600/40", url: "https://m.me/0984130234" },
+    { name: "TikTok", icon: <TiktokLogo weight="fill" />, color: "bg-gradient-to-r from-zinc-800 to-black", shadow: "shadow-black/40", url: "https://tiktok.com/@la_manhdey" },
+    { name: "YouTube", icon: <YoutubeLogo weight="fill" />, color: "bg-gradient-to-r from-red-500 to-[#FF0000]", shadow: "shadow-red-500/40", url: "https://www.youtube.com/@manhdev94" },
+    { name: "Email", icon: <EnvelopeSimple weight="fill" />, color: "bg-gradient-to-r from-brand-400 to-brand-600", shadow: "shadow-brand-500/40", url: "mailto:manhquyhop2@gmail.com" },
+  ]
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, delayChildren: 0.1 }
+    },
+    exit: {
+      opacity: 0,
+      transition: { staggerChildren: 0.05, staggerDirection: -1 }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.5, rotate: -15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotate: 0,
+      transition: { type: "spring", stiffness: 300, damping: 18 }
+    },
+    exit: { opacity: 0, scale: 0.8, y: 10, transition: { duration: 0.2 } }
+  }
+
+  return (
+    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-5">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="flex flex-col gap-3 origin-bottom-right"
+          >
+            {contacts.map((contact, index) => (
+              <motion.a
+                key={index}
+                variants={itemVariants}
+                href={contact.url}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.05, x: -8 }}
+                className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl text-white shadow-xl ${contact.shadow} ${contact.color} border border-white/20 backdrop-blur-md relative overflow-hidden group`}
+              >
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] skew-x-[-15deg] group-hover:animate-[shimmer_1.5s_infinite]"></div>
+                <span className="text-sm font-semibold tracking-wide z-10">{contact.name}</span>
+                <span className="text-2xl z-10">{contact.icon}</span>
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.button
+        onClick={toggleOpen}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="w-[72px] h-[72px] rounded-full flex items-center justify-center relative group"
+      >
+        {/* Lớp viền tỏa sáng lan rộng bảy sắc cầu vồng */}
+        <div className="absolute inset-[-12px] bg-gradient-to-tr from-[#ec4899] via-[#8b5cf6] to-[#06b6d4] rounded-full blur-[16px] opacity-60 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
+
+        {/* Nút bấm chính */}
+        <div className="absolute inset-0 rounded-full shadow-[inset_0_2px_10px_rgba(255,255,255,0.6),0_10px_25px_rgba(236,72,153,0.5)] border border-white/50 flex items-center justify-center text-white z-10 overflow-hidden">
+
+          {/* Nền lốc xoáy đa sắc (Conic Gradient Spinning) */}
+          <div className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,#ec4899,#a855f7,#3b82f6,#2dd4bf,#facc15,#ec4899)] animate-[spin_4s_linear_infinite]"></div>
+
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.div key="close" initial={{ rotate: -90, scale: 0 }} animate={{ rotate: 0, scale: 1 }} exit={{ rotate: 90, scale: 0 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="relative z-10">
+                <X size={34} weight="bold" className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="open"
+                initial={{ rotate: 90, scale: 0 }}
+                animate={{ rotate: 0, scale: 1 }}
+                exit={{ rotate: -90, scale: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="group-hover:animate-bounce relative z-10"
+              >
+                <ChatTeardropDots size={38} weight="fill" className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.button>
+    </div>
   )
 }
 
@@ -423,6 +533,7 @@ function App() {
         <FeaturedWork />
         <Footer />
       </main>
+      <FloatingContact />
     </>
   )
 }
