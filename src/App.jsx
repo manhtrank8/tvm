@@ -409,7 +409,7 @@ function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-zinc-100">
           <p className="text-zinc-400 font-light">© 2026 Trần Văn Mạnh. All rights reserved.</p>
           <div className="text-zinc-400 font-mono text-sm mt-4 md:mt-0">
-            Ứng dụng TVM | Developer
+            Trần Văn Mạnh | FullStack Deverloper
           </div>
         </div>
       </div>
