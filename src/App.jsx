@@ -1,375 +1,127 @@
 import { motion, useScroll, useTransform, AnimatePresence, useSpring } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
-import {
-  ArrowRight,
-  Code,
-  Robot,
-  DeviceMobile,
-  Storefront,
-  GithubLogo,
-  LinkedinLogo,
-  EnvelopeSimple,
-  Lightning,
-  Factory,
-  Eye,
-  Cube,
-  CheckCircle,
-  FacebookLogo,
-  ChatCircle,
-  Phone,
-  TiktokLogo,
-  YoutubeLogo,
-  X,
-  ChatTeardropDots
-} from '@phosphor-icons/react'
+import { ArrowRight, DeviceMobile, GithubLogo, LinkedinLogo, EnvelopeSimple, Lightning, Factory, Eye, FacebookLogo, ChatCircle, Phone, TiktokLogo, YoutubeLogo, X, ChatTeardropDots, Cpu, WifiHigh, Sun, Moon } from '@phosphor-icons/react'
 
-function AnimatedBackground() {
-  const { scrollY } = useScroll()
-  // Move the background vertically as user scrolls to create a parallax effect
-  const yBg = useTransform(scrollY, [0, 2000], [0, 400])
-  const rotate = useTransform(scrollY, [0, 2000], [0, 45])
-
+// ===== NAVBAR =====
+function Navbar({theme,onToggleTheme}) {
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', fn)
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
+  const isDark = theme === 'dark'
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#f4f4f6]">
-      <motion.div
-        style={{ y: yBg, rotate }}
-        className="absolute -top-[20%] -left-[10%] w-[150%] h-[150%] bg-grid-pattern opacity-40 origin-center"
-      ></motion.div>
-      <div className="absolute top-0 -left-4 w-[40vw] h-[40vw] bg-blue-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-blob"></div>
-      <div className="absolute top-40 -right-4 w-[50vw] h-[50vw] bg-brand-200 rounded-full mix-blend-multiply filter blur-[120px] opacity-40 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-[20vh] left-[20vw] w-[60vw] h-[60vw] bg-indigo-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-blob animation-delay-4000"></div>
+    <header style={{position:'fixed',top:0,left:0,right:0,zIndex:100,transition:'all 0.4s',background:scrolled?'var(--nav-bg-scrolled)':'transparent',backdropFilter:scrolled?'blur(20px)':'none',borderBottom:scrolled?'1px solid var(--nav-border)':'none'}}>
+      <div className='nav-shell' style={{maxWidth:1280,margin:'0 auto',padding:'0 32px',height:64,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+        <div style={{display:'flex',alignItems:'center',gap:10}}>
+          <div style={{width:32,height:32,borderRadius:8,background:'linear-gradient(135deg,#06b6d4,#8b5cf6)',display:'flex',alignItems:'center',justifyContent:'center'}}><Cpu size={18} color='white' weight='fill'/></div>
+          <span style={{fontWeight:700,fontSize:16,color:'var(--text-primary)',letterSpacing:'-0.02em'}}>Mạnh Trần<span style={{color:'#06b6d4'}}>.</span></span>
+        </div>
+        <nav className='nav-menu' style={{display:'flex',gap:32}}>
+          {[['#expertise','Kỹ Năng'],['#work','Dự Án'],['#about','Về Tôi'],['#contact','Liên Hệ']].map(([href,label]) => (
+            <a key={href} href={href} className='nav-link'>{label}</a>
+          ))}
+        </nav>
+        <div style={{display:'flex',alignItems:'center',gap:10}}>
+          <button className='theme-toggle' type='button' onClick={onToggleTheme} aria-label={isDark?'Bật chế độ sáng':'Bật chế độ tối'} title={isDark?'Bật chế độ sáng':'Bật chế độ tối'}>
+            {isDark ? <Sun size={18} weight='bold'/> : <Moon size={18} weight='bold'/>}
+          </button>
+          <a href='#contact' className='btn-primary nav-cta' style={{padding:'8px 20px',fontSize:13}}>Liên Hệ</a>
+        </div>
+      </div>
+    </header>
+  )
+}
+
+// ===== HERO =====
+const ROLES = ['PLC & Automation','Machine Vision','IoT & SCADA','Web & App Dev','CMMS & EPMS']
+function HeroSection() {
+  const [ri, setRi] = useState(0)
+  const { scrollY } = useScroll()
+  const y1 = useTransform(scrollY,[0,600],[0,80])
+  const op = useTransform(scrollY,[0,400],[1,0])
+  useEffect(() => { const t=setInterval(()=>setRi(p=>(p+1)%ROLES.length),2800); return ()=>clearInterval(t) },[])
+  return (
+    <section style={{minHeight:'100dvh',display:'flex',alignItems:'center',paddingTop:80,paddingBottom:60,position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',inset:0,backgroundImage:'linear-gradient(rgba(6,182,212,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.03) 1px,transparent 1px)',backgroundSize:'50px 50px',pointerEvents:'none'}}></div>
+      <div className='orb' style={{width:600,height:600,top:-200,left:-200,background:'radial-gradient(circle,rgba(6,182,212,0.12),transparent 70%)'}}></div>
+      <div className='orb' style={{width:500,height:500,bottom:-100,right:-100,background:'radial-gradient(circle,rgba(139,92,246,0.1),transparent 70%)'}}></div>
+      <motion.div className='hero-grid' style={{y:y1,opacity:op,maxWidth:1280,margin:'0 auto',padding:'0 32px',width:'100%',display:'grid',gridTemplateColumns:'1fr 1fr',gap:60,alignItems:'center'}}>
+        <div>
+          <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} style={{marginBottom:24}}>
+            <span className='tag-cyan'><span style={{width:6,height:6,borderRadius:'50%',background:'#22d3ee',display:'inline-block'}}></span>Sẵn sàng nhận dự án</span>
+          </motion.div>
+          <motion.h1 initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{delay:0.1}} style={{fontSize:'clamp(2.5rem,5vw,4rem)',fontWeight:900,lineHeight:1.1,letterSpacing:'-0.03em',color:'var(--text-primary)',marginBottom:16}}>
+            Trần Văn Mạnh
+          </motion.h1>
+          <div style={{height:56,overflow:'hidden',marginBottom:16}}>
+            <AnimatePresence mode='wait'>
+              <motion.div key={ri} initial={{y:40,opacity:0}} animate={{y:0,opacity:1}} exit={{y:-40,opacity:0}} transition={{duration:0.25}} className='gradient-text-cyan' style={{fontSize:'clamp(1.5rem,3vw,2.5rem)',fontWeight:700}}>{ROLES[ri]}</motion.div>
+            </AnimatePresence>
+          </div>
+          <motion.p initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.3}} style={{fontSize:18,color:'var(--text-secondary)',lineHeight:1.7,maxWidth:480,marginBottom:40}}>Nơi tư duy công nghiệp và logic máy móc hòa quyện cùng giao diện phần mềm trực quan.</motion.p>
+          <motion.div className='hero-actions' initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.4}} style={{display:'flex',gap:16,flexWrap:'wrap'}}>
+            <a href='#work' className='btn-primary'>Khám phá dự án <ArrowRight weight='bold' size={16}/></a>
+            <a href='#contact' className='btn-secondary'>Liên hệ ngay</a>
+          </motion.div>
+          <motion.div className='hero-stats' initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.6}} style={{display:'flex',gap:32,marginTop:48}}>
+            {[['8+','Năm KN'],['50+','Dự án'],['20+','Khách hàng']].map(([n,l])=>(
+              <div key={l}><div className='stat-number'>{n}</div><div style={{fontSize:12,color:'var(--text-muted)',marginTop:4,letterSpacing:'0.05em',textTransform:'uppercase'}}>{l}</div></div>
+            ))}
+          </motion.div>
+        </div>
+        <motion.div initial={{opacity:0,scale:0.9,filter:'blur(20px)'}} animate={{opacity:1,scale:1,filter:'blur(0)'}} transition={{duration:1.2,delay:0.3}} style={{position:'relative',display:'flex',justifyContent:'center'}}>
+          <div className='scan-container' style={{width:'100%',maxWidth:520,borderRadius:24,overflow:'hidden',border:'1px solid rgba(6,182,212,0.1)',boxShadow:'0 0 60px rgba(6,182,212,0.08)'}}>
+            <motion.img animate={{y:[-8,8,-8]}} transition={{repeat:Infinity,duration:7,ease:'easeInOut'}} src='/hero.png' alt='Automation' style={{width:'100%',objectFit:'cover',mixBlendMode:'luminosity',opacity:0.9}}/>
+          </div>
+        </motion.div>
+      </motion.div>
+    </section>
+  )
+}
+
+// ===== TICKER =====
+const TECH=['PLC Siemens','Robot Delta','Cognex Vision','SCADA WinCC','React.js','Node.js','IoT MQTT','Keyence','SQL Server','Firebase','Electron','Python']
+function SkillTicker() {
+  return (
+    <div style={{padding:'20px 0',borderTop:'1px solid var(--footer-border)',borderBottom:'1px solid var(--footer-border)',overflow:'hidden',background:'rgba(6,182,212,0.04)'}}>
+      <div className='ticker-wrap'>
+        <div className='ticker-content animate-ticker'>
+          {[...TECH,...TECH].map((t,i)=>(
+            <span key={i} style={{fontSize:13,fontWeight:600,letterSpacing:'0.06em',color:'var(--text-muted)',textTransform:'uppercase',display:'flex',alignItems:'center',gap:16}}>{t}<span style={{color:'rgba(6,182,212,0.7)'}}>•</span></span>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
 
-const SKILLS = [
-  "PLC",
-  "Website",
-  "IOT",
-  "Vision",
-  "Application"
-];
-
-function HeroSection({ onContactClick }) {
-  const { scrollY } = useScroll()
-  const y1 = useTransform(scrollY, [0, 1000], [0, 150])
-  const y2 = useTransform(scrollY, [0, 1000], [0, -150])
-  const opacity = useTransform(scrollY, [0, 400], [1, 0])
-
-  const [skillIndex, setSkillIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSkillIndex((prev) => (prev + 1) % SKILLS.length)
-    }, 2500)
-    return () => clearInterval(interval)
-  }, [])
-
+// ===== EXPERTISE (BENTO) =====
+const CARDS=[
+  {icon:<Factory size={32} weight='duotone'/>,title:'Tự Động Hóa',desc:'PLC, robot delta tốc độ cao, băng chuyền, case packer & hệ thống phân loại thông minh.',color:'#06b6d4',span:2},
+  {icon:<Eye size={32} weight='duotone'/>,title:'Machine Vision',desc:'Xử lý ảnh công nghiệp, OCR, phát hiện lỗi với Cognex & Keyence.',color:'#8b5cf6',span:1},
+  {icon:<DeviceMobile size={32} weight='duotone'/>,title:'Web & App Dev',desc:'Ứng dụng React, Electron, Node.js chuyên nghiệp.',color:'#ec4899',span:1},
+  {icon:<Lightning size={32} weight='duotone'/>,title:'CMMS & EPMS',desc:'Quản lý bảo trì thiết bị và giám sát điện năng toàn nhà máy theo thời gian thực.',color:'#f59e0b',span:2},
+  {icon:<WifiHigh size={32} weight='duotone'/>,title:'IoT & SCADA',desc:'Kết nối máy móc lên cloud, dashboard realtime với MQTT & Firebase.',color:'#10b981',span:2},
+]
+function ExpertiseSection() {
   return (
-    <section className="relative min-h-[100dvh] flex items-center pt-24 pb-16">
-      <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          style={{ y: y1, opacity }}
-          className="flex flex-col items-start"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass-panel mb-8 border border-white"
-          >
-            <span className="w-2.5 h-2.5 rounded-full bg-brand-500 shadow-[0_0_12px_rgba(20,184,166,0.6)]"></span>
-            <span className="text-sm font-semibold tracking-wide text-zinc-700 uppercase">Sẵn sàng nhận dự án</span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-bold tracking-tighter text-zinc-900 mb-6 leading-[1.1]"
-          >
-            Trần Văn Mạnh <span className="text-zinc-300 mx-2 font-light">|</span>
-            <div className="inline-block relative h-[1.2em] w-full mt-2 overflow-hidden align-bottom">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={skillIndex}
-                  initial={{ y: 40, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -40, opacity: 0 }}
-                  transition={{ duration: 0.2, ease: "circOut" }}
-                  className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-600 drop-shadow-sm"
-                >
-                  {SKILLS[skillIndex]}
-                </motion.span>
-              </AnimatePresence>
-            </div>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-zinc-500 max-w-lg mb-10 leading-relaxed font-light"
-          >
-            Nơi tư duy công nghiệp và logic máy móc hòa quyện cùng giao diện phần mềm trực quan.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-wrap gap-4"
-          >
-            <a href="#work" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 text-white rounded-full font-medium shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:-translate-y-1 transition-all duration-300 z-10 group">
-              <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_60%,#ec4899,#8b5cf6,#3b82f6)] animate-[spin_3s_linear_infinite] z-[-2]"></div>
-              <div className="absolute inset-[2px] bg-zinc-900 group-hover:bg-zinc-800 transition-colors rounded-full z-[-1]"></div>
-              Khám Phá Dự Án <ArrowRight weight="bold" />
-            </a>
-            <a href="#contact" onClick={() => onContactClick?.()} className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 text-zinc-900 rounded-full font-medium hover:text-brand-700 transition-all duration-300 z-10 group shadow-sm border border-zinc-200">
-              <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_60%,#14b8a6,#3b82f6,#8b5cf6)] animate-[spin_3s_linear_infinite] z-[-2] opacity-100"></div>
-              <div className="absolute inset-[1px] bg-white/70 backdrop-blur-xl group-hover:bg-white transition-colors rounded-full z-[-1]"></div>
-              Liên Hệ Ngay
-            </a>
-          </motion.div>
+    <section id='expertise' style={{padding:'100px 0',position:'relative'}}>
+      <div className='section-container' style={{maxWidth:1280,margin:'0 auto',padding:'0 32px'}}>
+        <motion.div initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} style={{textAlign:'center',marginBottom:64}}>
+          <span className='tag-cyan' style={{marginBottom:16,display:'inline-flex'}}>Hệ sinh thái kỹ năng</span>
+          <h2 style={{fontSize:'clamp(2rem,4vw,3rem)',fontWeight:800,letterSpacing:'-0.03em',color:'var(--text-primary)',marginTop:12}}>Chuyên Môn & Công Nghệ</h2>
+          <p style={{color:'var(--text-secondary)',fontSize:18,marginTop:12,maxWidth:500,margin:'12px auto 0'}}>Nền tảng vững chắc từ phần cứng công nghiệp đến hệ thống phần mềm đám mây.</p>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          style={{ y: y2 }}
-          className="relative lg:h-[700px] flex items-center justify-center w-full"
-        >
-          <div className="absolute inset-0 bg-gradient-to-tr from-brand-100/40 to-blue-100/40 rounded-full blur-[120px] -z-10"></div>
-          <motion.img
-            animate={{ y: [-15, 15, -15] }}
-            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            src="/hero.png"
-            alt="Premium Automation Concept"
-            className="w-full max-w-[120%] lg:max-w-[140%] object-contain drop-shadow-2xl mix-blend-multiply"
-          />
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-function BentoGrid() {
-  return (
-    <section id="expertise" className="py-32 px-6 relative z-10">
-      <div className="container mx-auto">
-        <div className="mb-24 text-center max-w-3xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-4xl md:text-5xl font-bold text-zinc-900 tracking-tight mb-6"
-          >
-            Hệ Sinh Thái Kỹ Năng
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ delay: 0.1 }}
-            className="text-zinc-500 text-xl font-light"
-          >
-            Nền tảng vững chắc từ phần cứng công nghiệp đến hệ thống phần mềm đám mây.
-          </motion.p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[300px]">
-          {/* Automation */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 40 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ type: "spring", stiffness: 80, damping: 20 }}
-            className="md:col-span-2 p-10 rounded-[2rem] flex flex-col justify-between group overflow-hidden relative z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500"
-          >
-            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#14b8a6,#3b82f6)] animate-[spin_5s_linear_infinite] z-[-2] opacity-100"></div>
-            <div className="absolute inset-[1.5px] bg-white/80 backdrop-blur-xl rounded-[calc(2rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:bg-white/95"></div>
-            <div className="absolute -right-4 -bottom-4 opacity-[0.03] text-zinc-900 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6 z-0">
-              <Factory size={280} weight="fill" />
-            </div>
-            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-zinc-800 mb-6 shadow-sm border border-zinc-100 group-hover:-translate-y-2 transition-transform duration-500">
-              <Robot size={32} weight="duotone" />
-            </div>
-            <div className="relative z-10">
-              <h3 className="text-3xl font-bold text-zinc-900 mb-3 tracking-tight">Hệ Thống Tự Động Hóa</h3>
-              <p className="text-zinc-500 text-lg">Thiết kế, lập trình và tích hợp cánh tay robot công nghiệp, hệ thống phân loại và băng chuyền tốc độ cao.</p>
-            </div>
-          </motion.div>
-
-          {/* Machine Vision */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 40 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.1 }}
-            className="p-10 rounded-[2rem] flex flex-col justify-between group overflow-hidden relative z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500"
-          >
-            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#3b82f6,#8b5cf6)] animate-[spin_5s_linear_infinite] z-[-2] opacity-100"></div>
-            <div className="absolute inset-[1.5px] bg-white/80 backdrop-blur-xl rounded-[calc(2rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:bg-white/95"></div>
-            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-blue-600 mb-6 shadow-sm border border-zinc-100 group-hover:-translate-y-2 transition-transform duration-500 relative z-10">
-              <Eye size={32} weight="duotone" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-zinc-900 mb-3 tracking-tight">Machine Vision</h3>
-              <p className="text-zinc-500 text-lg">Xử lý ảnh công nghiệp, đọc OCR và phát hiện lỗi vật lý.</p>
-            </div>
-          </motion.div>
-
-          {/* Software / Web Mobile */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 40 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.2 }}
-            className="p-10 rounded-[2rem] flex flex-col justify-between group overflow-hidden relative z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500"
-          >
-            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#ec4899,#facc15)] animate-[spin_5s_linear_infinite] z-[-2] opacity-100"></div>
-            <div className="absolute inset-[1.5px] bg-white/80 backdrop-blur-xl rounded-[calc(2rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:bg-white/95"></div>
-            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-600 mb-6 shadow-sm border border-zinc-100 group-hover:-translate-y-2 transition-transform duration-500 relative z-10">
-              <DeviceMobile size={32} weight="duotone" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-zinc-900 mb-3 tracking-tight">Software Dev</h3>
-              <p className="text-zinc-500 text-lg">Xây dựng ứng dụng Web, App chuyên nghiệp.</p>
-            </div>
-          </motion.div>
-
-          {/* CMMS / EPMS */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 40 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.3 }}
-            className="md:col-span-4 p-10 rounded-[2rem] flex flex-col md:flex-row items-start md:items-center justify-between group overflow-hidden relative z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500"
-          >
-            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#14b8a6,#8b5cf6,#ec4899)] animate-[spin_5s_linear_infinite] z-[-2] opacity-100"></div>
-            <div className="absolute inset-[1.5px] bg-gradient-to-r from-white/95 to-zinc-50/90 backdrop-blur-xl rounded-[calc(2rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:from-white group-hover:to-zinc-50/95"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-2/3 bg-[url('/dashboard.png')] bg-cover bg-left opacity-[0.08] mix-blend-multiply group-hover:scale-105 transition-transform duration-1000 z-0"></div>
-
-            <div className="relative z-10 md:w-1/2 mb-8 md:mb-0">
-              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-zinc-800 mb-6 border border-zinc-100 shadow-sm group-hover:-translate-y-2 transition-transform duration-500">
-                <Lightning size={32} weight="duotone" />
-              </div>
-              <h3 className="text-3xl font-bold text-zinc-900 mb-3 tracking-tight">Nền tảng Quản trị Doanh nghiệp</h3>
-              <p className="text-zinc-500 text-lg max-w-md">Xây dựng hệ thống CMMS (Quản lý bảo trì) và EPMS (Quản lý điện năng), kết nối dữ liệu máy lên Cloud.</p>
-            </div>
-
-            <div className="relative z-10 flex flex-col gap-3">
-              {['Data Synchronization', 'Predictive Maintenance', 'Energy Optimization'].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 bg-white/80 px-6 py-3 rounded-full border border-zinc-100 shadow-sm">
-                  <CheckCircle size={20} className="text-brand-500" weight="fill" />
-                  <span className="font-medium text-zinc-700">{item}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function ProjectCard({ project, index }) {
-  const ref = useRef(null)
-
-  // Track scroll position of this specific card
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "0.6 1"] // Animation plays while the top of the card moves from the bottom of the viewport to 60% up the viewport
-  })
-
-  // Smooth out the scroll raw value with a spring to prevent any stutter
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
-
-  // Map progress (0 to 1) to y translation and opacity
-  const y = useTransform(smoothProgress, [0, 1], [150, 0])
-  const opacity = useTransform(smoothProgress, [0, 1], [0, 1])
-
-  return (
-    <motion.div
-      ref={ref}
-      style={{ y, opacity }}
-      className="mb-32 last:mb-0"
-    >
-      <div className="relative p-6 md:p-10 rounded-[2.5rem] flex flex-col lg:flex-row items-center gap-12 group/card overflow-hidden z-10 shadow-[0_20px_50px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-500">
-        <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#3b82f6,#14b8a6,#8b5cf6)] animate-[spin_6s_linear_infinite] z-[-2] opacity-100"></div>
-        <div className="absolute inset-[1.5px] bg-white/90 backdrop-blur-xl border border-white/50 rounded-[calc(2.5rem-1.5px)] z-[-1] transition-colors duration-500 group-hover/card:bg-white/95"></div>
-        <div className="w-full lg:w-[55%] aspect-[16/10] rounded-[2rem] overflow-hidden relative bg-zinc-100 group">
-          <img
-            src={project.img}
-            alt={project.name}
-            className="absolute inset-0 w-full h-full object-cover rounded-xl scale-[1.02] group-hover:scale-105 transition-transform duration-700 ease-out"
-          />
-        </div>
-
-        <div className="w-full lg:w-[45%] flex flex-col py-4">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-zinc-100 text-xs font-semibold tracking-wider text-zinc-600 uppercase mb-6 self-start border border-zinc-200">
-            {project.type}
-          </div>
-          <h3 className="text-3xl md:text-4xl font-bold text-zinc-900 mb-6 leading-tight tracking-tight">{project.name}</h3>
-          <p className="text-zinc-500 text-lg mb-10 leading-relaxed font-light">{project.desc}</p>
-          <button className="relative overflow-hidden inline-flex items-center gap-3 w-max px-8 py-4 text-white rounded-full font-medium transition-all z-10 group hover:-translate-y-1 hover:shadow-lg">
-            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_60%,#8b5cf6,#ec4899)] animate-[spin_3s_linear_infinite] z-[-2] opacity-100"></div>
-            <div className="absolute inset-[2px] bg-zinc-900 group-hover:bg-zinc-800 transition-colors rounded-full z-[-1]"></div>
-            Xem chi tiết <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
-function FeaturedWork() {
-  const projects = [
-    {
-      name: "Tích hợp Robot Delta & Đóng thùng",
-      type: "Tự Động Hóa · Robotics",
-      desc: "Nâng cao năng suất với hệ thống gắp thả tự động bằng Robot Delta tốc độ cao, tích hợp máy gắp thùng (Case Packer) tự động khép kín.",
-      img: "/robot.png"
-    },
-    {
-      name: "Machine Vision: Đọc Date & Phát Hiện Lỗi",
-      type: "AI & Machine Vision",
-      desc: "Hệ thống thị giác máy tính công nghiệp (Cognex/Keyence) nhận diện, đọc OCR mã vạch/date, tự động loại bỏ sản phẩm lỗi không đạt chuẩn.",
-      img: "/vision.png"
-    },
-    {
-      name: "Hệ thống CMMS & Quản lý Bảo Trì",
-      type: "Phần mềm doanh nghiệp",
-      desc: "Nền tảng số hóa quy trình quản lý tài sản, bảo trì thiết bị và theo dõi đánh giá KPI nhân sự. Tích hợp biểu đồ trực quan.",
-      img: "/dashboard.png"
-    },
-    {
-      name: "Hệ thống Quản lý Điện năng (EPMS)",
-      type: "Giám sát năng lượng",
-      desc: "Giải pháp IoT giám sát điện năng tiêu thụ toàn nhà máy theo thời gian thực, lập báo cáo phân tích để tối ưu hóa chi phí vận hành.",
-      img: "/epms.png"
-    },
-    {
-      name: "Hệ thống Phân loại Sản phẩm Văn Minh",
-      type: "Tự động hóa toàn diện",
-      desc: "Giải pháp phân loại bưu kiện tự động sử dụng băng tải động cơ, tích hợp cân động và phần mềm quản lý kho.",
-      img: "/sorting.png"
-    }
-  ]
-
-  return (
-    <section id="work" className="py-32 px-6 relative z-10">
-      <div className="container mx-auto max-w-[1400px]">
-        <div className="mb-24 text-center">
-          <h2 className="text-4xl md:text-[4rem] font-bold text-zinc-900 tracking-tight mb-6">Dự Án Tiêu Biểu</h2>
-          <p className="text-zinc-500 text-xl font-light max-w-2xl mx-auto">Những giải pháp thực tế đã triển khai mang lại giá trị vận hành bền vững.</p>
-        </div>
-
-        <div className="relative">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
+        <div className='expertise-grid' style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,autoRows:'auto'}}>
+          {CARDS.map((c,i)=>(
+            <motion.div key={i} initial={{opacity:0,y:40}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*0.1,type:'spring',stiffness:80}} className='glass-dark card-lift expertise-card' style={{gridColumn:'span '+c.span,borderRadius:20,padding:32,position:'relative',overflow:'hidden',minHeight:200}}>
+              <div style={{position:'absolute',inset:0,background:'radial-gradient(circle at 80% 20%,'+c.color+'08,transparent 70%)',pointerEvents:'none'}}></div>
+              <div style={{width:52,height:52,borderRadius:14,background:c.color+'15',border:'1px solid '+c.color+'25',display:'flex',alignItems:'center',justifyContent:'center',color:c.color,marginBottom:20}}>{c.icon}</div>
+              <h3 style={{fontSize:20,fontWeight:700,color:'var(--text-primary)',marginBottom:10,letterSpacing:'-0.02em'}}>{c.title}</h3>
+              <p style={{color:'var(--text-secondary)',fontSize:14,lineHeight:1.6}}>{c.desc}</p>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -377,236 +129,196 @@ function FeaturedWork() {
   )
 }
 
-function Footer() {
+// ===== PROJECTS =====
+const PROJECTS=[
+  {name:'Robot Delta & Đóng Thùng',type:'Automation · Robotics',desc:'Hệ thống gắp thả tự động bằng Robot Delta tốc độ cao, tích hợp Case Packer tự động khép kín, nâng cao năng suất 300%.',img:'/robot.png',color:'#06b6d4',tags:['PLC','Robot Delta','HMI']},
+  {name:'Machine Vision: OCR & Lỗi',type:'AI · Machine Vision',desc:'Thị giác máy tính công nghiệp nhận diện, đọc OCR mã vạch/date code, tự động loại bỏ sản phẩm lỗi với độ chính xác 99.8%.',img:'/vision.png',color:'#8b5cf6',tags:['Cognex','Keyence','Python']},
+  {name:'CMMS - Quản lý Bảo Trì',type:'Enterprise Software',desc:'Số hóa quy trình quản lý tài sản, bảo trì thiết bị và theo dõi KPI nhân sự. Dashboard trực quan realtime.',img:'/dashboard.png',color:'#ec4899',tags:['React','Node.js','SQL']},
+  {name:'EPMS - Giám Sát Điện Năng',type:'IoT · Energy',desc:'Giải pháp IoT giám sát điện năng toàn nhà máy theo thời gian thực, báo cáo phân tích tối ưu chi phí vận hành.',img:'/epms.png',color:'#f59e0b',tags:['IoT','MQTT','Firebase']},
+  {name:'Phân Loại Sản Phẩm Tự Động',type:'Full Automation',desc:'Hệ thống phân loại bưu kiện tự động với băng tải động cơ, cân động tốc độ cao và phần mềm quản lý kho tích hợp.',img:'/sorting.png',color:'#10b981',tags:['PLC','Vision','SCADA']},
+]
+function ProjectCard({p,index}) {
+  const ref=useRef(null)
+  const {scrollYProgress}=useScroll({target:ref,offset:['0 1','0.6 1']})
+  const smooth=useSpring(scrollYProgress,{stiffness:100,damping:30})
+  const y=useTransform(smooth,[0,1],[100,0])
+  const op=useTransform(smooth,[0,1],[0,1])
+  const isEven=index%2===0
   return (
-    <footer id="contact" className="border-t border-zinc-200 bg-white pt-32 pb-12 px-6 relative z-10 overflow-hidden">
-      <div className="container mx-auto max-w-[1400px]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-32 items-center">
-          <div>
-            <h2 className="text-6xl md:text-[5rem] font-bold text-zinc-900 mb-8 tracking-tighter leading-[1.1]">Let's build<br />something.</h2>
-            <p className="text-2xl text-zinc-500 font-light mb-12 max-w-lg">Liên hệ ngay để thảo luận về giải pháp tối ưu cho doanh nghiệp của bạn.</p>
-            <a href="mailto:manhquyhop2@gmail.com" className="relative overflow-hidden inline-flex items-center gap-4 px-10 py-5 text-white rounded-full font-medium text-lg hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(20,184,166,0.3)] transition-all z-10 group">
-              <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_60%,#14b8a6,#2dd4bf)] animate-[spin_3s_linear_infinite] z-[-2]"></div>
-              <div className="absolute inset-[2px] bg-brand-600 group-hover:bg-brand-500 transition-colors rounded-full z-[-1]"></div>
-              Gửi Email <ArrowRight weight="bold" />
-            </a>
-          </div>
-          <div className="relative p-12 rounded-[3rem] overflow-hidden z-10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.06)] transition-all duration-500 group">
-            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_70%,#ec4899,#3b82f6)] animate-[spin_6s_linear_infinite] z-[-2] opacity-100"></div>
-            <div className="absolute inset-[1.5px] bg-white/80 backdrop-blur-xl border border-white/50 rounded-[calc(3rem-1.5px)] z-[-1] transition-colors duration-500 group-hover:bg-white/95"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
-              <div>
-                <h4 className="font-semibold text-zinc-900 mb-6 text-xl">Liên Hệ Trực Tiếp</h4>
-                <ul className="space-y-4 text-zinc-500 font-light text-lg">
-                  <li>
-                    <a href="tel:0984130234" className="hover:text-brand-600 transition-colors flex items-center gap-3"><Phone /> 0984 130 234</a>
-                  </li>
-                  <li>
-                    <a href="https://zalo.me/0984130234" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><ChatCircle /> Zalo</a>
-                  </li>
-                  <li>
-                    <a href="mailto:manhquyhop2@gmail.com" className="hover:text-brand-600 transition-colors flex items-center gap-3"><EnvelopeSimple /> Email</a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-zinc-900 mb-6 text-xl">Mạng xã hội</h4>
-                <ul className="space-y-4 text-zinc-500 font-light text-lg">
-                  <li>
-                    <a href="https://m.me/0984130234" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><FacebookLogo /> Facebook</a>
-                  </li>
-                  <li>
-                    <a href="https://tiktok.com/@la_manhdey" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><TiktokLogo /> TikTok</a>
-                  </li>
-                  <li>
-                    <a href="https://www.youtube.com/@manhdev94" target="_blank" rel="noreferrer" className="hover:text-brand-600 transition-colors flex items-center gap-3"><YoutubeLogo /> YouTube</a>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:text-brand-600 transition-colors flex items-center gap-3"><LinkedinLogo /> LinkedIn</a>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:text-brand-600 transition-colors flex items-center gap-3"><GithubLogo /> GitHub</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+    <motion.div ref={ref} style={{y,opacity:op,marginBottom:60}} className='glass-dark project-shell' style2={{borderRadius:24,overflow:'hidden',border:'1px solid var(--glass-border)'}}>
+      <div className='project-layout' style={{display:'grid',gridTemplateColumns:isEven?'55% 45%':'45% 55%',minHeight:360,borderRadius:24,overflow:'hidden',border:'1px solid var(--glass-border)',background:'var(--project-bg)'}}>
+        <div className='project-image-wrap' style={{order:isEven?0:1}}>
+          <img src={p.img} alt={p.name}/>
+          <div className='project-image-overlay'></div>
         </div>
-
-        <div className="flex flex-col items-center justify-center pt-16 pb-8 border-t border-zinc-100">
-          <div className="relative group cursor-default mb-6">
-            {/* Vòng oval phát sáng */}
-            <div className="absolute inset-0 border-[1.5px] border-brand-500/20 rounded-[100%] blur-[2px] scale-110 group-hover:border-brand-400/60 group-hover:blur-[4px] group-hover:scale-115 transition-all duration-700"></div>
-            <div className="absolute inset-0 border-[0.5px] border-brand-300/40 rounded-[100%] scale-105 group-hover:scale-110 transition-transform duration-700"></div>
-            
-            <div className="flex flex-col items-center justify-center px-16 py-8 bg-gradient-to-b from-white/80 to-white/30 backdrop-blur-md rounded-[100%] border border-white/60 shadow-[0_4px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_40px_rgba(20,184,166,0.1)] transition-all duration-700 relative overflow-hidden">
-               <div className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,transparent_70%,#14b8a6_100%)] opacity-0 group-hover:opacity-15 animate-[spin_4s_linear_infinite] rounded-[100%] transition-opacity duration-700"></div>
-               
-               <div className="flex items-center gap-3 mb-2 relative z-10">
-                 <span className="text-3xl text-zinc-300 font-light group-hover:text-brand-300 transition-colors duration-500">©</span>
-                 <span className="text-5xl font-signature tracking-wider text-zinc-800 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-brand-600 group-hover:to-blue-600 transition-all duration-500 drop-shadow-sm group-hover:drop-shadow-md">Mạnh Trần</span>
-               </div>
-               
-               <div className="flex items-center gap-4 w-full mb-3 relative z-10">
-                 <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-zinc-300 group-hover:to-brand-300 transition-colors duration-500"></div>
-                 <span className="text-lg font-mono font-semibold tracking-[0.25em] text-zinc-500 group-hover:text-brand-500 transition-colors duration-500">2026</span>
-                 <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-zinc-300 group-hover:to-brand-300 transition-colors duration-500"></div>
-               </div>
-               
-               <div className="text-[0.65rem] font-bold tracking-[0.35em] text-zinc-400 group-hover:text-zinc-500 uppercase mb-4 relative z-10 transition-colors duration-500">
-                 All Rights Reserved
-               </div>
-               
-               <div className="text-sm font-bold tracking-[0.15em] text-zinc-600 group-hover:text-brand-600 bg-zinc-50/80 group-hover:bg-brand-50/80 px-5 py-1.5 rounded-full border border-zinc-200 group-hover:border-brand-200/60 shadow-sm transition-all duration-500 relative z-10">
-                 0984.130.234
-               </div>
-            </div>
+        <div className='project-copy' style={{padding:40,display:'flex',flexDirection:'column',justifyContent:'center',order:isEven?1:0}}>
+          <div style={{marginBottom:16,display:'flex',gap:8,flexWrap:'wrap'}}>
+            <span style={{fontSize:11,fontWeight:600,letterSpacing:'0.1em',textTransform:'uppercase',color:p.color,background:p.color+'15',border:'1px solid '+p.color+'30',padding:'4px 12px',borderRadius:100}}>{p.type}</span>
           </div>
-          
-          <div className="text-zinc-400 font-mono text-sm mt-4">
-            Trần Văn Mạnh | FullStack Developer
+          <h3 style={{fontSize:'clamp(1.4rem,2.5vw,1.8rem)',fontWeight:800,color:'var(--text-primary)',marginBottom:12,letterSpacing:'-0.02em'}}>{p.name}</h3>
+          <p style={{color:'var(--text-secondary)',fontSize:15,lineHeight:1.7,marginBottom:24}}>{p.desc}</p>
+          <div style={{display:'flex',gap:8,flexWrap:'wrap',marginBottom:28}}>
+            {p.tags.map(t=>(<span key={t} className='skill-chip'>{t}</span>))}
           </div>
+          <button className='btn-secondary' style={{width:'fit-content',fontSize:13}}>Xem chi tiết <ArrowRight size={14}/></button>
         </div>
       </div>
-    </footer>
+    </motion.div>
+  )
+}
+function ProjectsSection() {
+  return (
+    <section id='work' style={{padding:'100px 0'}}>
+      <div className='section-container' style={{maxWidth:1280,margin:'0 auto',padding:'0 32px'}}>
+        <motion.div initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} style={{textAlign:'center',marginBottom:64}}>
+          <span className='tag-cyan' style={{marginBottom:16,display:'inline-flex'}}>Portfolio</span>
+          <h2 style={{fontSize:'clamp(2rem,4vw,3rem)',fontWeight:800,letterSpacing:'-0.03em',color:'var(--text-primary)',marginTop:12}}>Dự Án Tiêu Biểu</h2>
+          <p style={{color:'var(--text-secondary)',fontSize:18,marginTop:12}}>Những giải pháp thực tế đã triển khai mang lại giá trị vận hành bền vững.</p>
+        </motion.div>
+        {PROJECTS.map((p,i)=>(<ProjectCard key={i} p={p} index={i}/>))}
+      </div>
+    </section>
   )
 }
 
-function FloatingContact({ isOpen, setIsOpen }) {
-  const toggleOpen = () => setIsOpen(!isOpen)
-  const contactRef = useRef(null)
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (contactRef.current && !contactRef.current.contains(event.target)) {
-        setIsOpen(false)
-      }
-    }
-    
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isOpen, setIsOpen])
-
-  const contacts = [
-    { name: "Zalo", icon: <ChatCircle weight="fill" />, color: "bg-gradient-to-r from-blue-400 to-[#0068FF]", shadow: "shadow-blue-500/40", url: "https://zalo.me/0984130234" },
-    { name: "Facebook", icon: <FacebookLogo weight="fill" />, color: "bg-gradient-to-r from-blue-600 to-[#0866FF]", shadow: "shadow-blue-600/40", url: "https://m.me/0984130234" },
-    { name: "TikTok", icon: <TiktokLogo weight="fill" />, color: "bg-gradient-to-r from-zinc-800 to-black", shadow: "shadow-black/40", url: "https://tiktok.com/@la_manhdey" },
-    { name: "YouTube", icon: <YoutubeLogo weight="fill" />, color: "bg-gradient-to-r from-red-500 to-[#FF0000]", shadow: "shadow-red-500/40", url: "https://www.youtube.com/@manhdev94" },
-    { name: "Email", icon: <EnvelopeSimple weight="fill" />, color: "bg-gradient-to-r from-brand-400 to-brand-600", shadow: "shadow-brand-500/40", url: "mailto:manhquyhop2@gmail.com" },
-  ]
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.08, delayChildren: 0.1 }
-    },
-    exit: {
-      opacity: 0,
-      transition: { staggerChildren: 0.05, staggerDirection: -1 }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.5, rotate: -15 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      rotate: 0,
-      transition: { type: "spring", stiffness: 300, damping: 18 }
-    },
-    exit: { opacity: 0, scale: 0.8, y: 10, transition: { duration: 0.2 } }
-  }
-
+// ===== ABOUT =====
+function AboutSection() {
+  const skills=[['PLC / HMI',90],['Robot & Vision',85],['Web Dev',88],['IoT / Cloud',80],['CMMS / EPMS',92]]
   return (
-    <div ref={contactRef} className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-5">
+    <section id='about' style={{padding:'100px 0',position:'relative'}}>
+      <div style={{position:'absolute',inset:0,background:'linear-gradient(180deg,transparent,rgba(6,182,212,0.02),transparent)',pointerEvents:'none'}}></div>
+      <div className='section-container about-grid' style={{maxWidth:1280,margin:'0 auto',padding:'0 32px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:80,alignItems:'center'}}>
+        <motion.div initial={{opacity:0,x:-40}} whileInView={{opacity:1,x:0}} viewport={{once:true}}>
+          <span className='tag-cyan' style={{marginBottom:16,display:'inline-flex'}}>Về tôi</span>
+          <h2 style={{fontSize:'clamp(2rem,3.5vw,2.8rem)',fontWeight:800,color:'var(--text-primary)',letterSpacing:'-0.03em',marginTop:12,marginBottom:20}}>Kỹ sư tự động hóa<br/><span className='gradient-text-cyan'>& phát triển phần mềm</span></h2>
+          <p style={{color:'var(--text-secondary)',fontSize:16,lineHeight:1.8,marginBottom:16}}>Với hơn 8 năm kinh nghiệm trong ngành tự động hóa công nghiệp, tôi chuyên tích hợp hệ thống robot, PLC và phát triển phần mềm quản trị doanh nghiệp.</p>
+          <p style={{color:'var(--text-secondary)',fontSize:16,lineHeight:1.8,marginBottom:32}}>Từng triển khai dự án tại các nhà máy lớn tại Việt Nam, mang lại giải pháp tối ưu hóa quy trình sản xuất và giảm chi phí vận hành.</p>
+          <div className='about-actions' style={{display:'flex',gap:16}}>
+            <a href='tel:0984130234' className='btn-primary' style={{fontSize:14}}>Gọi ngay <Phone size={16}/></a>
+            <a href='https://zalo.me/0984130234' className='btn-secondary' style={{fontSize:14}}>Zalo <ChatCircle size={16}/></a>
+          </div>
+        </motion.div>
+        <motion.div initial={{opacity:0,x:40}} whileInView={{opacity:1,x:0}} viewport={{once:true}}>
+          <div className='glass-dark' style={{borderRadius:20,padding:32}}>
+            <h4 style={{fontSize:14,fontWeight:600,letterSpacing:'0.08em',textTransform:'uppercase',color:'var(--text-muted)',marginBottom:24}}>Năng lực chuyên môn</h4>
+            {skills.map(([name,pct],i)=>(
+              <div key={i} style={{marginBottom:20}}>
+                <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
+                  <span style={{fontSize:14,fontWeight:600,color:'var(--text-primary)'}}>{name}</span>
+                  <span style={{fontSize:13,fontFamily:'JetBrains Mono,monospace',color:'#22d3ee'}}>{pct}%</span>
+                </div>
+                <div style={{height:4,borderRadius:100,background:'var(--progress-track)',overflow:'hidden'}}>
+                  <motion.div initial={{width:0}} whileInView={{width:pct+'%'}} viewport={{once:true}} transition={{duration:1,delay:i*0.15,ease:'easeOut'}} className='progress-bar'></motion.div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ===== CONTACT =====
+function ContactSection() {
+  return (
+    <section id='contact' style={{padding:'100px 0'}}>
+      <div className='contact-container' style={{maxWidth:900,margin:'0 auto',padding:'0 32px'}}>
+        <motion.div initial={{opacity:0,y:40}} whileInView={{opacity:1,y:0}} viewport={{once:true}} className='glass-dark contact-panel' style={{borderRadius:28,padding:'60px 48px',textAlign:'center',position:'relative',overflow:'hidden',border:'1px solid rgba(6,182,212,0.1)'}}>
+          <div style={{position:'absolute',inset:0,background:'radial-gradient(circle at 50% 0%,rgba(6,182,212,0.08),transparent 60%)',pointerEvents:'none'}}></div>
+          <span className='tag-cyan' style={{marginBottom:20,display:'inline-flex'}}>Liên hệ</span>
+          <h2 style={{fontSize:'clamp(2rem,4vw,3.5rem)',fontWeight:900,letterSpacing:'-0.03em',color:'var(--text-primary)',marginTop:12,marginBottom:16}}>Hãy cùng xây dựng<br/><span className='gradient-text-cyan'>điều gì đó tuyệt vời</span></h2>
+          <p style={{color:'var(--text-secondary)',fontSize:18,maxWidth:480,margin:'0 auto 40px'}}>Liên hệ ngay để thảo luận về giải pháp tối ưu cho doanh nghiệp của bạn.</p>
+          <div className='contact-actions' style={{display:'flex',gap:16,justifyContent:'center',flexWrap:'wrap',marginBottom:48}}>
+            <a href='mailto:manhquyhop2@gmail.com' className='btn-primary'>Gửi Email <EnvelopeSimple weight='bold' size={18}/></a>
+            <a href='tel:0984130234' className='btn-secondary'>0984 130 234 <Phone size={16}/></a>
+          </div>
+          <div className='social-links' style={{display:'flex',justifyContent:'center',gap:24,flexWrap:'wrap'}}>
+            {[{icon:<ChatCircle size={20}/>,label:'Zalo',url:'https://zalo.me/0984130234'},{icon:<FacebookLogo size={20}/>,label:'Facebook',url:'https://m.me/0984130234'},{icon:<TiktokLogo size={20}/>,label:'TikTok',url:'https://tiktok.com/@la_manhdey'},{icon:<YoutubeLogo size={20}/>,label:'YouTube',url:'https://www.youtube.com/@manhdev94'},{icon:<GithubLogo size={20}/>,label:'GitHub',url:'#'},{icon:<LinkedinLogo size={20}/>,label:'LinkedIn',url:'#'}].map(({icon,label,url})=>(
+              <a key={label} href={url} target='_blank' rel='noreferrer' style={{display:'flex',alignItems:'center',gap:8,color:'var(--text-secondary)',textDecoration:'none',fontSize:14,fontWeight:500,padding:'8px 16px',borderRadius:10,border:'1px solid var(--glass-border)',transition:'all 0.3s'}} onMouseOver={e=>{e.currentTarget.style.color='#0891b2';e.currentTarget.style.borderColor='rgba(6,182,212,0.45)'}} onMouseOut={e=>{e.currentTarget.style.color='var(--text-secondary)';e.currentTarget.style.borderColor='var(--glass-border)'}}>{icon}{label}</a>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ===== FOOTER =====
+function Footer() {
+  return (
+    <footer style={{borderTop:'1px solid var(--footer-border)',padding:'32px',textAlign:'center'}}>
+      <p style={{color:'var(--text-muted)',fontSize:13,fontFamily:'JetBrains Mono,monospace'}}>© 2026 Trần Văn Mạnh • FullStack Automation Developer • 0984.130.234</p>
+    </footer>
+  )
+}
+// ===== FLOATING CONTACT =====
+function FloatingContact({isOpen,setIsOpen}) {
+  const ref=useRef(null)
+  useEffect(()=>{
+    const fn=(e)=>{ if(ref.current&&!ref.current.contains(e.target)) setIsOpen(false) }
+    if(isOpen) document.addEventListener('mousedown',fn)
+    return ()=>document.removeEventListener('mousedown',fn)
+  },[isOpen,setIsOpen])
+  const contacts=[
+    {name:'Zalo',icon:<ChatCircle weight='fill' size={22}/>,bg:'linear-gradient(135deg,#0068FF,#4facfe)',url:'https://zalo.me/0984130234'},
+    {name:'Facebook',icon:<FacebookLogo weight='fill' size={22}/>,bg:'linear-gradient(135deg,#0866FF,#4facfe)',url:'https://m.me/0984130234'},
+    {name:'TikTok',icon:<TiktokLogo weight='fill' size={22}/>,bg:'linear-gradient(135deg,#010101,#69C9D0)',url:'https://tiktok.com/@la_manhdey'},
+    {name:'YouTube',icon:<YoutubeLogo weight='fill' size={22}/>,bg:'linear-gradient(135deg,#FF0000,#ff6b6b)',url:'https://www.youtube.com/@manhdev94'},
+    {name:'Email',icon:<EnvelopeSimple weight='fill' size={22}/>,bg:'linear-gradient(135deg,#06b6d4,#8b5cf6)',url:'mailto:manhquyhop2@gmail.com'},
+  ]
+  return (
+    <div ref={ref} className='floating-contact' style={{position:'fixed',bottom:32,right:32,zIndex:1000,display:'flex',flexDirection:'column',alignItems:'flex-end',gap:12}}>
       <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="flex flex-col gap-3 origin-bottom-right"
-          >
-            {contacts.map((contact, index) => (
-              <motion.a
-                key={index}
-                variants={itemVariants}
-                href={contact.url}
-                target="_blank"
-                rel="noreferrer"
-                whileHover={{ scale: 1.05, x: -8 }}
-                className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl text-white shadow-xl ${contact.shadow} ${contact.color} border border-white/20 backdrop-blur-md relative overflow-hidden group`}
-              >
-                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] skew-x-[-15deg] group-hover:animate-[shimmer_1.5s_infinite]"></div>
-                <span className="text-sm font-semibold tracking-wide z-10">{contact.name}</span>
-                <span className="text-2xl z-10">{contact.icon}</span>
+        {isOpen&&(
+          <motion.div key='menu' initial={{opacity:0,scale:0.8,y:20}} animate={{opacity:1,scale:1,y:0}} exit={{opacity:0,scale:0.8,y:20}} style={{display:'flex',flexDirection:'column',gap:10}}>
+            {contacts.map((c,i)=>(
+              <motion.a key={i} href={c.url} target='_blank' rel='noreferrer' initial={{opacity:0,x:40}} animate={{opacity:1,x:0}} exit={{opacity:0,x:40}} transition={{delay:i*0.06}} whileHover={{scale:1.05,x:-4}} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 18px',borderRadius:14,color:'white',textDecoration:'none',fontSize:14,fontWeight:600,background:c.bg,boxShadow:'0 4px 20px rgba(0,0,0,0.3)',border:'1px solid rgba(255,255,255,0.15)'}}>
+                {c.icon}{c.name}
               </motion.a>
             ))}
           </motion.div>
         )}
       </AnimatePresence>
-
-      <motion.button
-        onClick={toggleOpen}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        className="w-[72px] h-[72px] rounded-full flex items-center justify-center relative group"
-      >
-        {/* Lớp viền tỏa sáng lan rộng bảy sắc cầu vồng */}
-        <div className="absolute inset-[-12px] bg-gradient-to-tr from-[#ec4899] via-[#8b5cf6] to-[#06b6d4] rounded-full blur-[16px] opacity-60 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
-
-        {/* Nút bấm chính */}
-        <div className="absolute inset-0 rounded-full shadow-[inset_0_2px_10px_rgba(255,255,255,0.6),0_10px_25px_rgba(236,72,153,0.5)] border border-white/50 flex items-center justify-center text-white z-10 overflow-hidden">
-
-          {/* Nền lốc xoáy đa sắc (Conic Gradient Spinning) */}
-          <div className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,#ec4899,#a855f7,#3b82f6,#2dd4bf,#facc15,#ec4899)] animate-[spin_4s_linear_infinite]"></div>
-
-          <AnimatePresence mode="wait">
-            {isOpen ? (
-              <motion.div key="close" initial={{ rotate: -90, scale: 0 }} animate={{ rotate: 0, scale: 1 }} exit={{ rotate: 90, scale: 0 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="relative z-10">
-                <X size={34} weight="bold" className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="open"
-                initial={{ rotate: 90, scale: 0 }}
-                animate={{ rotate: 0, scale: 1 }}
-                exit={{ rotate: -90, scale: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="group-hover:animate-bounce relative z-10"
-              >
-                <ChatTeardropDots size={38} weight="fill" className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" />
-              </motion.div>
-            )}
+      <motion.button onClick={()=>setIsOpen(!isOpen)} whileHover={{scale:1.1}} whileTap={{scale:0.9}} style={{width:60,height:60,borderRadius:'50%',border:'none',cursor:'pointer',position:'relative',overflow:'visible'}}>
+        <div style={{position:'absolute',inset:-8,borderRadius:'50%',background:'conic-gradient(#ec4899,#8b5cf6,#06b6d4,#ec4899)',filter:'blur(12px)',opacity:0.7,animation:'spin 3s linear infinite'}}></div>
+        <div style={{position:'absolute',inset:0,borderRadius:'50%',background:'conic-gradient(#ec4899,#8b5cf6,#06b6d4,#ec4899)',animation:'spin 3s linear infinite',display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <AnimatePresence mode='wait'>
+            {isOpen?(<motion.div key='x' initial={{rotate:-90,scale:0}} animate={{rotate:0,scale:1}} exit={{rotate:90,scale:0}}><X size={26} color='white' weight='bold'/></motion.div>)
+            :(<motion.div key='chat' initial={{rotate:90,scale:0}} animate={{rotate:0,scale:1}} exit={{rotate:-90,scale:0}}><ChatTeardropDots size={28} color='white' weight='fill'/></motion.div>)}
           </AnimatePresence>
         </div>
       </motion.button>
     </div>
   )
 }
-
+// ===== APP =====
 function App() {
-  const [isContactOpen, setIsContactOpen] = useState(false)
+  const [open,setOpen]=useState(false)
+  const [theme,setTheme]=useState('light')
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+
+  const toggleTheme = () => setTheme(current => current === 'dark' ? 'light' : 'dark')
 
   return (
     <>
-      <AnimatedBackground />
-      <main className="font-sans selection:bg-brand-200 selection:text-brand-900 overflow-visible">
-        <HeroSection onContactClick={() => setIsContactOpen(true)} />
-        <BentoGrid />
-        <FeaturedWork />
-        <Footer />
+      <Navbar theme={theme} onToggleTheme={toggleTheme}/>
+      <main>
+        <HeroSection/>
+        <SkillTicker/>
+        <ExpertiseSection/>
+        <div style={{height:1,background:'linear-gradient(90deg,transparent,rgba(6,182,212,0.2),transparent)',margin:'0 32px'}}></div>
+        <ProjectsSection/>
+        <div style={{height:1,background:'linear-gradient(90deg,transparent,rgba(139,92,246,0.2),transparent)',margin:'0 32px'}}></div>
+        <AboutSection/>
+        <ContactSection/>
+        <Footer/>
       </main>
-      <FloatingContact isOpen={isContactOpen} setIsOpen={setIsContactOpen} />
+      <FloatingContact isOpen={open} setIsOpen={setOpen}/>
     </>
   )
 }
-
 export default App
